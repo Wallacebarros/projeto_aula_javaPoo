@@ -6,13 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-// import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
-@Getter
-@Setter
 @Entity
+@Data
 @Table(name = "users")
 public class UserModel {
     
@@ -20,13 +19,14 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    // @NotNull
+    @NotBlank(message = "name required")
     private String name;
 
-    // @NotNull
+    @Email
+    @NotBlank(message = "email required")
     @Column(unique = true)
     private String email;
 
-    // @NotNull
+    @NotBlank(message = "password required")
     private String password;
 }

@@ -1,6 +1,7 @@
 package br.com.poojava.exepitions;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,13 @@ public class AplicationExepition extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> hResponseEntity(DataIntegrityViolationException exception) {
         ErrosMenssage erro = new ErrosMenssage(HttpStatus.CONFLICT.value(), "email ja cadastrado");
+        return new ResponseEntity<>(erro, HttpStatus.CONFLICT);
+    }
+
+    // InvalidDataAccessApiUsageException
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<Object> hResponseEntity(InvalidDataAccessApiUsageException exception) {
+        ErrosMenssage erro = new ErrosMenssage(HttpStatus.CONFLICT.value(), "usuario não encontrado");
         return new ResponseEntity<>(erro, HttpStatus.CONFLICT);
     }
 }
