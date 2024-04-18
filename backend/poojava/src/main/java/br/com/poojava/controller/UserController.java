@@ -1,5 +1,6 @@
 package br.com.poojava.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.poojava.dto.UserDTO;
 import br.com.poojava.models.UserModel;
 import br.com.poojava.service.UserService;
 import jakarta.validation.Valid;
@@ -33,7 +35,14 @@ public class UserController {
             return ResponseEntity.badRequest().body("não ha usuarios cadastrados");
         }
 
-        return ResponseEntity.ok().body(users);
+        List<UserDTO> usersDto = new ArrayList<>();
+
+        users.forEach((user)->{
+            UserDTO userDto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword());
+            usersDto.add(userDto);
+        });
+
+        return ResponseEntity.ok().body(usersDto);
     }
 
     @GetMapping("/{email}")
@@ -43,8 +52,9 @@ public class UserController {
         if (user == null) {
             return ResponseEntity.badRequest().body("Usuario não encontrado");
         }
+        UserDTO userDto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword());
 
-        return ResponseEntity.ok(service.getuser(email));
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping
