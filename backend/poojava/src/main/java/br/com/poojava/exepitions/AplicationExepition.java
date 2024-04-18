@@ -23,7 +23,6 @@ public class AplicationExepition extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.CONFLICT);
     }
 
-    // InvalidDataAccessApiUsageException
     @ExceptionHandler(InvalidDataAccessApiUsageException.class)
     public ResponseEntity<Object> hResponseEntity(InvalidDataAccessApiUsageException exception) {
         ErrosMenssage erro = new ErrosMenssage(HttpStatus.CONFLICT.value(), "usuario não encontrado");
