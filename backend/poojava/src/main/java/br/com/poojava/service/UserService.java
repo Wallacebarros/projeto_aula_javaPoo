@@ -18,6 +18,10 @@ public class UserService {
         return repository.findAll();
     }
 
+    public UserModel getUser(String email) {
+        return repository.findByEmail(email);
+    }
+
     public UserModel getuser(String email) {
         return repository.findByEmail(email);
     }
